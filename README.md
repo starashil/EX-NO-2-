@@ -35,9 +35,127 @@ STEP-5: Display the obtained cipher text.
 
 
 Program:
+```
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
+int main()
+{
+    char text[100], key[100], matrix[5][5];
+    char used[26] = {0};
+    char plain[100], cipher[100];
+    int i, j, k = 0, len = 0;
+    int r1, c1, r2, c2;
 
+    printf("Enter plain text: ");
+    fgets(text, sizeof(text), stdin);
 
+    printf("Enter keyword: ");
+    scanf("%99s", key);
 
+    for (i = 0; text[i] != '\0'; i++)
+    {
+        if (isalpha((unsigned char)text[i]))
+        {
+            char ch = toupper((unsigned char)text[i]);
 
+            if (ch == 'J')
+                ch = 'I';
+
+            plain[len++] = ch;
+        }
+    }
+    plain[len] = '\0';
+
+    for (i = 0; key[i] != '\0'; i++)
+    {
+        char ch = toupper((unsigned char)key[i]);
+
+        if (ch == 'J')
+            ch = 'I';
+
+        if (ch >= 'A' && ch <= 'Z' && !used[ch - 'A'])
+        {
+            matrix[k / 5][k % 5] = ch;
+            used[ch - 'A'] = 1;
+            k++;
+        }
+    }
+
+    for (i = 0; i < 26; i++)
+    {
+        if (i != ('J' - 'A') && !used[i])
+        {
+            matrix[k / 5][k % 5] = 'A' + i;
+            k++;
+        }
+    }
+
+    printf("\nKey Matrix:\n");
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+            printf("%c ", matrix[i][j]);
+
+        printf("\n");
+    }
+
+    len = 0;
+
+    for (i = 0; plain[i] != '\0'; )
+    {
+        char a = plain[i++];
+        char b;
+
+        if (plain[i] == '\0' || plain[i] == a)
+            b = 'X';
+        else
+            b = plain[i++];
+
+        for (j = 0; j < 25; j++)
+        {
+            if (matrix[j / 5][j % 5] == a)
+            {
+                r1 = j / 5;
+                c1 = j % 5;
+            }
+
+            if (matrix[j / 5][j % 5] == b)
+            {
+                r2 = j / 5;
+                c2 = j % 5;
+            }
+        }
+
+        if (r1 == r2)
+        {
+            cipher[len++] = matrix[r1][(c1 + 1) % 5];
+            cipher[len++] = matrix[r2][(c2 + 1) % 5];
+        }
+        else if (c1 == c2)
+        {
+            cipher[len++] = matrix[(r1 + 1) % 5][c1];
+            cipher[len++] = matrix[(r2 + 1) % 5][c2];
+        }
+        else
+        {
+            cipher[len++] = matrix[r1][c2];
+            cipher[len++] = matrix[r2][c1];
+        }
+    }
+
+    cipher[len] = '\0';
+
+    printf("\nEncrypted message: %s\n", cipher);
+
+    return 0;
+}
+```
 Output:
+<img width="487" height="400" alt="image" src="https://github.com/user-attachments/assets/18cab804-ad2b-4df1-b0d8-9396a29c697a" />
+
+Result:
+
+Thus, the implementation of the Playfair substitution cipher technique using C language was executed successfully.
