@@ -34,7 +34,7 @@ STEP-5: Display the obtained cipher text.
 
 
 
-Program:
+## Program:
 ```
 #include <stdio.h>
 #include <string.h>
@@ -153,9 +153,9 @@ int main()
     return 0;
 }
 ```
-Output:
+## Output:
 <img width="487" height="400" alt="image" src="https://github.com/user-attachments/assets/18cab804-ad2b-4df1-b0d8-9396a29c697a" />
 
-Result:
+## Result:
 
 Thus, the implementation of the Playfair substitution cipher technique using C language was executed successfully.
